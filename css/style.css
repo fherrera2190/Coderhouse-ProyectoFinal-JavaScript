@@ -1,0 +1,89 @@
+/* RESET */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  min-height: 15vh;
+}
+.bg-black {
+  background-color: #e9f1f7 !important;
+}
+.bg-brown {
+  background-color: #2274a5;
+}
+.bg-custom-blue {
+  background-color: #131b23;
+}
+.logo {
+  width: 85px;
+  height: 85px;
+  border-radius: 20px;
+}
+.link-sombra-page {
+  color: white;
+  background-color: #131b23;
+  border-radius: 10px;
+}
+.link-sombra:hover {
+  color: white;
+  background-color: #131b23;
+  border-radius: 10px;
+}
+
+.navbar-collapse {
+  flex-grow: 0 !important;
+}
+.h1-index {
+  border: 2px solid #e7d4b5;
+}
+.main {
+  min-height: 70vh;
+}
+
+/* SECCION ACERCA DE NOSOTROS */
+.main-acerca {
+  min-height: 70vh;
+}
+
+.bg-card {
+  background-color: #e7dfc6;
+}
+
+/* SECCION MENU */
+
+.sidebar {
+  background-color: #e7dfc6;
+  width: 200px;
+}
+
+.pedido{
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: #e7dfc6;
+}
+.img-pedido{
+  border-radius: 10px;
+  border:gray solid 1px;
+  width: 80px;
+  height: 80px;
+}
+.pedido-cantidad{
+  width: 80px;
+  height: max-content;
+}
+
+/* Seccion Footer */
+.footer {
+  min-height: 15vh;
+}
+
+
+
+@media(max-width:768px){
+  .sidebar{
+    display: none;
+  }
+}
