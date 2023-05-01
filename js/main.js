@@ -181,7 +181,7 @@ const contenedorProductos = document.querySelector("#contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
 const tituloPrincipal = document.querySelector("#titulo-principal");
 let botonesAgregar = document.querySelectorAll(".producto-agregar");
-let productosEnCarrito = [];
+let productosEnCarrito;
 
 ///cuando recien se carga el documento
 document.addEventListener('DOMContentLoaded', () => {
@@ -190,7 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productosEnCarritoLS != null) {
         productosEnCarrito = productosEnCarritoLS;
     }
-    mostrarItemsCarrito();
+    else {
+        productosEnCarrito = []
+    }
 });
 
 function crearTarjeta(producto) {
@@ -330,7 +332,7 @@ botonPedido.addEventListener('click', (e) => {
 
 function agregarAlCarrito(e) {
     const idBoton = e.currentTarget.id;
-    const productoAgregado = productos.find(producto => producto.id === idBoton);
+    let productoAgregado = productos.find(producto => producto.id === +idBoton);
     if (productosEnCarrito.some(producto => producto.id === idBoton)) {
         const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
         productosEnCarrito[index].cantidad++;
