@@ -178,8 +178,8 @@ let productos = [
     }
 ];
 const contenedorProductos = document.querySelector("#contenedor-productos");
-const botonesCategorias = document.querySelectorAll(".boton-categoria");
 const tituloPrincipal = document.querySelector("#titulo-principal");
+let botonesEliminar = document.querySelectorAll(".boton-eliminar");
 let botonesAgregar = document.querySelectorAll(".producto-agregar");
 let productosEnCarrito;
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productosEnCarrito = productosEnCarritoLS;
     }
     else {
-        productosEnCarrito = []
+        productosEnCarrito = [];
     }
 });
 
@@ -232,6 +232,14 @@ function actualizarBotonesAgregar() {
     });
 }
 
+
+function actualizarBotonesEliminar() {
+    botonesAgregar = document.querySelectorAll(".producto-eliminar");
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener("click", eliminarCarrito);
+    });
+}
+
 function cargarProductos(productosElegidos) {
     contenedorProductos.innerHTML = "";
     let contador = 0;
@@ -262,13 +270,14 @@ function cargarProductoPedido(producto) {
             <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">${producto.cantidad}</div>
             <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">${producto.precio}</div>
             <div class="botones-pedido d-flex flex-column">
-            <a class="text-decoration-none" href="#">Eliminar</a>
+            <a id="${producto.id}" class="text-decoration-none producto-eliminar" href="#">Eliminar</a>
             </div>
     `
     return div;
 }
 
 function mostrarPedido(productosEnCarrito) {
+    contenedorProductos.innerHTML=""
     const div = document.createElement('div')
     div.classList.add('pedido');
     let precioTotal = 0;
@@ -284,6 +293,7 @@ function mostrarPedido(productosEnCarrito) {
     </div>
     `;
     contenedorProductos.append(div);
+    actualizarBotonesEliminar()
 }
 
 // LINKS ASIDE
@@ -330,15 +340,23 @@ botonPedido.addEventListener('click', (e) => {
     mostrarPedido(productosEnCarrito);
 });
 
+// FUNCIONES DEL CARRITO
 function agregarAlCarrito(e) {
     const idBoton = e.currentTarget.id;
     let productoAgregado = productos.find(producto => producto.id === +idBoton);
-    if (productosEnCarrito.some(producto => producto.id === idBoton)) {
-        const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
+    if (productosEnCarrito.some(producto => producto.id === +idBoton)) {
+        const index = productosEnCarrito.findIndex(producto => producto.id === +idBoton);
         productosEnCarrito[index].cantidad++;
     } else {
         productoAgregado.cantidad = 1;
         productosEnCarrito.push(productoAgregado);
     }
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+}
+function eliminarCarrito(e) {
+    const idBoton = e.currentTarget.id;
+    console.log(idBoton);
+    productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== +idBoton);
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    mostrarPedido(productosEnCarrito);
 }
