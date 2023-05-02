@@ -352,11 +352,13 @@ function agregarAlCarrito(e) {
         productosEnCarrito.push(productoAgregado);
     }
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    alert('Se agrego tu producto al pedido')
 }
 function eliminarCarrito(e) {
     const idBoton = e.currentTarget.id;
     console.log(idBoton);
     productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== +idBoton);
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    alert('Se elimino tu producto del pedido')
     mostrarPedido(productosEnCarrito);
 }
