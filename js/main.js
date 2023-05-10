@@ -30,7 +30,7 @@ let productos = [
         nombre: "Hamburguesa BBQ bacon",
         descripcion: "Hamburguesa con carne de res, tocino, queso cheddar y cebolla.",
         imagen: "../recursos/productos/ham4.jpg",
-        preci: 1000
+        precio: 1000
     },
     {
         id: 5,
@@ -179,7 +179,6 @@ let productos = [
 ];
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const tituloPrincipal = document.querySelector("#titulo-principal");
-let botonesEliminar = document.querySelectorAll(".boton-eliminar");
 let botonesAgregar = document.querySelectorAll(".producto-agregar");
 let productosEnCarrito;
 
@@ -194,6 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
         productosEnCarrito = [];
     }
 });
+
+function guardarCarrito() {
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+}
+
+
+function calcularTotalCarrito() {
+    let total = 0
+    productosEnCarrito.forEach(producto => {
+        total += producto.precio * producto.cantidad;
+    });
+    return total;
+}
+
 
 function crearTarjeta(producto) {
     const div = document.createElement("div");
@@ -232,11 +245,17 @@ function actualizarBotonesAgregar() {
     });
 }
 
-
 function actualizarBotonesEliminar() {
     botonesAgregar = document.querySelectorAll(".producto-eliminar");
     botonesAgregar.forEach(boton => {
         boton.addEventListener("click", eliminarCarrito);
+    });
+}
+
+function actualizarBotonesModificar() {
+    let botonesModificarCantidades = document.querySelectorAll(".pedido-cantidad-modificar");
+    botonesModificarCantidades.forEach(boton => {
+        boton.addEventListener("change", modificarCantidadCarrito);
     });
 }
 
@@ -267,7 +286,9 @@ function cargarProductoPedido(producto) {
     div.innerHTML = `
             <img src="${producto.imagen}" class="img-pedido" alt="" />
             <p class="m-0 fs-2">${producto.nombre}</p>
-            <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">${producto.cantidad}</div>
+            <div>
+            <input type="number" id="cantidad${producto.id}" class="pedido-cantidad-modificar" min="1" value="${producto.cantidad}">
+            </div>
             <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">${producto.precio}</div>
             <div class="botones-pedido d-flex flex-column">
             <a id="${producto.id}" class="text-decoration-none producto-eliminar" href="#">Eliminar</a>
@@ -277,23 +298,22 @@ function cargarProductoPedido(producto) {
 }
 
 function mostrarPedido(productosEnCarrito) {
-    contenedorProductos.innerHTML=""
+    contenedorProductos.innerHTML = ""
     const div = document.createElement('div')
     div.classList.add('pedido');
-    let precioTotal = 0;
     productosEnCarrito.forEach(producto => {
         div.append(cargarProductoPedido(producto));
-        precioTotal += producto.cantidad * producto.precio;
     })
     div.innerHTML += `
     <hr>
     <div class='d-flex align-items-center justify-content-end'>
         <p class="m-0">Total con Envio</p>
-        <div class="border border-1 border-dark bg-white fs-4 m-4 pedido-cantidad text-center">${precioTotal}</div>
+        <div class="border border-1 border-dark bg-white fs-4 m-4 total text-center">${calcularTotalCarrito()}</div>
     </div>
     `;
     contenedorProductos.append(div);
     actualizarBotonesEliminar()
+    actualizarBotonesModificar();
 }
 
 // LINKS ASIDE
@@ -356,9 +376,22 @@ function agregarAlCarrito(e) {
 }
 function eliminarCarrito(e) {
     const idBoton = e.currentTarget.id;
-    console.log(idBoton);
     productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== +idBoton);
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
     alert('Se elimino tu producto del pedido')
     mostrarPedido(productosEnCarrito);
+}
+
+function modificarCantidadCarrito(e) {
+    const total = document.querySelector('.total');
+    const idBoton = e.currentTarget.id;
+    let index = productosEnCarrito.findIndex(producto => ('cantidad' + producto.id) === idBoton);
+    if (e.target.value < 1) {
+        productosEnCarrito[index].cantidad = 1
+        e.target.value = 1;
+    } else {
+        productosEnCarrito[index].cantidad = e.target.value;
+        total.innerHTML = '' + calcularTotalCarrito();
+        guardarCarrito();
+    }
 }
