@@ -192,25 +192,27 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
         productosEnCarrito = [];
     }
+    calcularCantidadProductosCarrito();
 });
 
 function guardarCarrito() {
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 }
 
-
 function calcularTotalCarrito() {
-    let total = 0
-    productosEnCarrito.forEach(producto => {
-        total += producto.precio * producto.cantidad;
-    });
-    return total;
+    return productosEnCarrito.reduce((a, producto) => {
+        return (a += +producto.precio * +producto.cantidad);
+    }, 0);;
 }
-
+function calcularCantidadProductosCarrito() {
+    const pedidoCantidad = document.querySelector("#pedido-cantidad");
+    pedidoCantidad.innerHTML = "" + productosEnCarrito.reduce((a, producto) => {
+        return (a += +producto.cantidad);
+    }, 0);
+}
 
 function crearTarjeta(producto) {
     const div = document.createElement("div");
-    div.classList.add("col-12", "col-sm-12", "col-lg-4", "col-xl-4", "col-xxl-4");
     div.innerHTML = `
         <div class="producto m-3 card text-center bg-card p-2">
           <img
@@ -231,13 +233,6 @@ function crearTarjeta(producto) {
     return div
 }
 
-function crearFila() {
-    const div = document.createElement("div");
-    div.classList.add("row");
-    div.innerHTML = '';
-    return div
-}
-
 function actualizarBotonesAgregar() {
     botonesAgregar = document.querySelectorAll(".producto-agregar");
     botonesAgregar.forEach(boton => {
@@ -248,7 +243,7 @@ function actualizarBotonesAgregar() {
 function actualizarBotonesEliminar() {
     botonesAgregar = document.querySelectorAll(".producto-eliminar");
     botonesAgregar.forEach(boton => {
-        boton.addEventListener("click", eliminarCarrito);
+        boton.addEventListener("click", eliminarProducto);
     });
 }
 
@@ -261,57 +256,52 @@ function actualizarBotonesModificar() {
 
 function cargarProductos(productosElegidos) {
     contenedorProductos.innerHTML = "";
-    let contador = 0;
-    let row = crearFila();
-    productosElegidos.forEach((producto, indice) => {
-        if (contador < 3) {
-            row.append(crearTarjeta(producto))
-            contador++;
-            if (indice === productosElegidos.length - 1) {
-                contenedorProductos.append(row);
-            }
-        } else {
-            contenedorProductos.append(row);
-            row = crearFila();
-            row.append(crearTarjeta(producto));
-            contador = 1;
-        }
-    })
+    const div = document.createElement("div");
+    div.classList.add("row", "row-cols-1", "row-cols-md-2", "row-cols-lg-3");
+    div.innerHTML = '';
+    productosElegidos.forEach(producto => {
+        div.append(crearTarjeta(producto));
+    }
+    )
+    contenedorProductos.append(div);
     actualizarBotonesAgregar();
 }
-// SECCION PEDIDOS
-function cargarProductoPedido(producto) {
-    const div = document.createElement('div');
-    div.classList.add("d-flex", "align-items-center", "justify-content-around", "m-2");
-    div.innerHTML = `
-            <img src="${producto.imagen}" class="img-pedido" alt="" />
-            <p class="m-0 fs-2">${producto.nombre}</p>
-            <div>
-            <input type="number" id="cantidad${producto.id}" class="pedido-cantidad-modificar" min="1" value="${producto.cantidad}">
-            </div>
-            <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">${producto.precio}</div>
-            <div class="botones-pedido d-flex flex-column">
-            <a id="${producto.id}" class="text-decoration-none producto-eliminar" href="#">Eliminar</a>
-            </div>
-    `
-    return div;
-}
 
-function mostrarPedido(productosEnCarrito) {
+function mostrarPedido() {
+    console.log('estoy aqui')
     contenedorProductos.innerHTML = ""
-    const div = document.createElement('div')
-    div.classList.add('pedido');
+    const divP = document.createElement('div')
+    divP.classList.add('pedido');
     productosEnCarrito.forEach(producto => {
-        div.append(cargarProductoPedido(producto));
+        let div = document.createElement('div');
+        div.classList.add("d-flex", "justify-content-around", 'align-items-center', 'm-3');
+        div.innerHTML = `
+        <img src="${producto.imagen}" class="img-pedido" alt="" />
+        <p class="fs-4">${producto.nombre}</p>
+        <div class="">
+             <input type="number" id="cantidad${producto.id}" class="w-50 pedido-cantidad-modificar" min="1" value="${producto.cantidad}">
+        </div>
+        <div class="border border-1 border-dark bg-white fs-5 m-0 pedido-cantidad text-center">$${producto.precio}</div>
+        <div class="botones-pedido">
+            <a id="${producto.id}" class="text-decoration-none producto-eliminar" href="#">Eliminar</a>
+        </div> 
+        `
+        divP.append(div);
     })
-    div.innerHTML += `
+
+    divP.innerHTML += `
     <hr>
-    <div class='d-flex align-items-center justify-content-end'>
-        <p class="m-0">Total con Envio</p>
-        <div class="border border-1 border-dark bg-white fs-4 m-4 total text-center">${calcularTotalCarrito()}</div>
+    <div class='d-flex align-items-center justify-content-between m-4'>
+        <button type="button" class="btn btn-primary">Vaciar Carrito</button>
+    <div>
+    <div class='d-flex align-items-center'>
+        <p class="m-2">Total con Envio</p>
+        <div class="border border-1 border-dark bg-white fs-4 m-2 total text-center">${calcularTotalCarrito()}</div>
+             <button type="button" class="btn btn-primary m-2">Comprar</button>
+        </div>
     </div>
     `;
-    contenedorProductos.append(div);
+    contenedorProductos.append(divP);
     actualizarBotonesEliminar()
     actualizarBotonesModificar();
 }
@@ -357,7 +347,7 @@ const botonPedido = document.getElementById('pedido');
 botonPedido.addEventListener('click', (e) => {
     tituloPrincipal.innerHTML = "Tu Pedido";
     contenedorProductos.innerHTML = "";
-    mostrarPedido(productosEnCarrito);
+    mostrarPedido();
 });
 
 // FUNCIONES DEL CARRITO
@@ -371,17 +361,66 @@ function agregarAlCarrito(e) {
         productoAgregado.cantidad = 1;
         productosEnCarrito.push(productoAgregado);
     }
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-    alert('Se agrego tu producto al pedido')
+    Swal.fire({
+        title: 'Se agrego tu producto al pedido',
+        icon: 'success',
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+        , timer: 1500
+    })
+    guardarCarrito();
+    calcularCantidadProductosCarrito();
 }
-function eliminarCarrito(e) {
+function eliminarProducto(e) {
     const idBoton = e.currentTarget.id;
-    productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== +idBoton);
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-    alert('Se elimino tu producto del pedido')
-    mostrarPedido(productosEnCarrito);
+    Swal.fire({
+        title: 'Quieres eliminar el producto?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, eliminarlo'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Se elimino tu producto satisfactoriamente.',
+                timer: 1000,
+            })
+            productosEnCarrito = productosEnCarrito.filter(producto => producto.id !== +idBoton);
+            guardarCarrito();
+            mostrarPedido();
+            calcularCantidadProductosCarrito();
+        }
+    })
 }
-
+function vaciarCarrito(e) {
+    const idBoton = e.currentTarget.id;
+    Swal.fire({
+        title: 'Quieres eliminar el pedido?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, eliminarlo'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Se elimino tu pedido satisfactoriamente.',
+                timer: 1000,
+            })
+            productosEnCarrito = [];
+            guardarCarrito();
+            mostrarPedido();
+            calcularCantidadProductosCarrito();
+        }
+    })
+}
 function modificarCantidadCarrito(e) {
     const total = document.querySelector('.total');
     const idBoton = e.currentTarget.id;
@@ -393,5 +432,7 @@ function modificarCantidadCarrito(e) {
         productosEnCarrito[index].cantidad = e.target.value;
         total.innerHTML = '' + calcularTotalCarrito();
         guardarCarrito();
+        calcularCantidadProductosCarrito()
     }
 }
+
