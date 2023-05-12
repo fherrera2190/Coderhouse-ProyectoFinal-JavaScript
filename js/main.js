@@ -195,22 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     calcularCantidadProductosCarrito();
 });
 
-function guardarCarrito() {
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-}
-
-function calcularTotalCarrito() {
-    return productosEnCarrito.reduce((a, producto) => {
-        return (a += +producto.precio * +producto.cantidad);
-    }, 0);;
-}
-function calcularCantidadProductosCarrito() {
-    const pedidoCantidad = document.querySelector("#pedido-cantidad");
-    pedidoCantidad.innerHTML = "" + productosEnCarrito.reduce((a, producto) => {
-        return (a += +producto.cantidad);
-    }, 0);
-}
-
+//funciones encargadas del dom
 function crearTarjeta(producto) {
     const div = document.createElement("div");
     div.innerHTML = `
@@ -232,28 +217,6 @@ function crearTarjeta(producto) {
     `;
     return div
 }
-
-function actualizarBotonesAgregar() {
-    botonesAgregar = document.querySelectorAll(".producto-agregar");
-    botonesAgregar.forEach(boton => {
-        boton.addEventListener("click", agregarAlCarrito);
-    });
-}
-
-function actualizarBotonesEliminar() {
-    botonesAgregar = document.querySelectorAll(".producto-eliminar");
-    botonesAgregar.forEach(boton => {
-        boton.addEventListener("click", eliminarProducto);
-    });
-}
-
-function actualizarBotonesModificar() {
-    let botonesModificarCantidades = document.querySelectorAll(".pedido-cantidad-modificar");
-    botonesModificarCantidades.forEach(boton => {
-        boton.addEventListener("change", modificarCantidadCarrito);
-    });
-}
-
 function cargarProductos(productosElegidos) {
     contenedorProductos.innerHTML = "";
     const div = document.createElement("div");
@@ -266,9 +229,7 @@ function cargarProductos(productosElegidos) {
     contenedorProductos.append(div);
     actualizarBotonesAgregar();
 }
-
 function mostrarPedido() {
-    console.log('estoy aqui')
     contenedorProductos.innerHTML = ""
     const divP = document.createElement('div')
     divP.classList.add('pedido');
@@ -288,23 +249,50 @@ function mostrarPedido() {
         `
         divP.append(div);
     })
-
     divP.innerHTML += `
     <hr>
     <div class='d-flex align-items-center justify-content-between m-4'>
-        <button type="button" class="btn btn-primary">Vaciar Carrito</button>
+        <button type="button" id="btnVaciar" class="btn btn-primary">Vaciar Carrito</button>
     <div>
     <div class='d-flex align-items-center'>
         <p class="m-2">Total con Envio</p>
         <div class="border border-1 border-dark bg-white fs-4 m-2 total text-center">${calcularTotalCarrito()}</div>
-             <button type="button" class="btn btn-primary m-2">Comprar</button>
+             <button type="button" id="btnCompra" class="btn btn-primary m-2">Comprar</button>
         </div>
     </div>
     `;
     contenedorProductos.append(divP);
     actualizarBotonesEliminar()
     actualizarBotonesModificar();
+    agregarEvent();
 }
+
+//Seccion Eventos
+function actualizarBotonesAgregar() {
+    botonesAgregar = document.querySelectorAll(".producto-agregar");
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener("click", agregarAlCarrito);
+    });
+}
+
+function actualizarBotonesEliminar() {
+    botonesAgregar = document.querySelectorAll(".producto-eliminar");
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener("click", eliminarProducto);
+    });
+}
+
+function actualizarBotonesModificar() {
+    document.querySelectorAll(".pedido-cantidad-modificar").forEach(boton => {
+        boton.addEventListener("change", modificarCantidadCarrito);
+    });
+}
+
+function agregarEvent() {
+    document.querySelector("#btnVaciar").addEventListener("click", vaciarCarrito);
+    document.querySelector("#btnCompra").addEventListener("click", compraRealizada);
+}
+
 
 // LINKS ASIDE
 const comidayBebidas = document.getElementById('todos');
@@ -398,8 +386,7 @@ function eliminarProducto(e) {
         }
     })
 }
-function vaciarCarrito(e) {
-    const idBoton = e.currentTarget.id;
+function vaciarCarrito() {
     Swal.fire({
         title: 'Quieres eliminar el pedido?',
         icon: 'warning',
@@ -409,7 +396,7 @@ function vaciarCarrito(e) {
         cancelButtonText: 'Cancelar',
         confirmButtonText: 'Si, eliminarlo'
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && productosEnCarrito.length > 0) {
             Swal.fire({
                 title: 'Se elimino tu pedido satisfactoriamente.',
                 timer: 1000,
@@ -418,6 +405,11 @@ function vaciarCarrito(e) {
             guardarCarrito();
             mostrarPedido();
             calcularCantidadProductosCarrito();
+        } else {
+            Swal.fire({
+                title: 'No hay productos para eliminar',
+                timer: 1000,
+            })
         }
     })
 }
@@ -435,4 +427,37 @@ function modificarCantidadCarrito(e) {
         calcularCantidadProductosCarrito()
     }
 }
+function compraRealizada() {
 
+    if (productosEnCarrito.length > 0) {
+        Swal.fire({
+            title: 'Gracias por su Compra, te avisaremos cuando tu pedido se encuentre en camino!',
+            icon: 'success',
+            timer: 1300
+        })
+        setTimeout(() => {
+            location.href = '../secciones/menu.html';
+            productosEnCarrito = [];
+            guardarCarrito();
+        }, 2000);
+    } else {
+        Swal.fire({
+            title: 'No tiene productos en tu pedido',
+            timer: 1000,
+        })
+    }
+}
+function guardarCarrito() {
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+}
+function calcularTotalCarrito() {
+    return productosEnCarrito.reduce((a, producto) => {
+        return (a += +producto.precio * +producto.cantidad);
+    }, 0);;
+}
+function calcularCantidadProductosCarrito() {
+    const pedidoCantidad = document.querySelector("#pedido-cantidad");
+    pedidoCantidad.innerHTML = "" + productosEnCarrito.reduce((a, producto) => {
+        return (a += +producto.cantidad);
+    }, 0);
+}
