@@ -1,0 +1,178 @@
+[
+    {
+        "id": 1,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Clásica",
+        "descripcion": "Hamburguesa clásica con carne de res, lechuga, tomate y queso.",
+        "imagen": "../recursos/productos/ham1.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 2,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Doble Carne",
+        "descripcion": "Hamburguesa doble con carne de res, lechuga, tomate y queso.",
+        "imagen": "../recursos/productos/ham2.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 3,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Falafel",
+        "descripcion": "Hamburguesa vegetariana con falafel, lechuga, tomate, cebolla y hummus.",
+        "imagen": "../recursos/productos/ham3.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 4,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa BBQ bacon",
+        "descripcion": "Hamburguesa con carne de res, tocino, queso cheddar y cebolla.",
+        "imagen": "../recursos/productos/ham4.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 5,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Portobello",
+        "descripcion": "Hamburguesa vegetariana con hongos Portobello y cebolla caramelizada.",
+        "imagen": "../recursos/productos/ham5.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 6,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Queso Azul",
+        "descripcion": "Hamburguesa con carne de res, queso azul y cebolla salteada.",
+        "imagen": "../recursos/productos/ham6.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 7,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Hawaiiana",
+        "descripcion": "Hamburguesa con carne de res, queso, piña y jamón.",
+        "imagen": "../recursos/productos/ham7.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 8,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa Portobello con queso",
+        "descripcion": "Hamburguesa vegetariana con hongos Portobello, cebolla caramelizada, queso de cabra, rúcula y pesto.",
+        "imagen": "../recursos/productos/ham8.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 9,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa de Pollo",
+        "descripcion": "Hamburguesa de pollo con lechuga, tomate y queso.",
+        "imagen": "../recursos/productos/ham9.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 10,
+        "categoria": "hamburguesa",
+        "nombre": "Hamburguesa de Pescado",
+        "descripcion": "Hamburguesa de pescado con lechuga, tomate, cebolla y salsa tártara.",
+        "imagen": "../recursos/productos/ham10.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 11,
+        "categoria": "lomo",
+        "nombre": "Lomo Clásico",
+        "descripcion": "Sándwich de lomo de res con lechuga, tomate y mayonesa.",
+        "imagen": "../recursos/productos/lomo1.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 12,
+        "categoria": "lomo",
+        "nombre": "Lomo Completo",
+        "descripcion": "Sándwich de lomo de res con lechuga, tomate, huevo frito, jamón y queso.",
+        "imagen": "../recursos/productos/lomo2.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 13,
+        "categoria": "milanesa",
+        "nombre": "Sandwich Milanesa Napolitana",
+        "descripcion": "Sándwich de milanesa de carne con salsa de tomate, queso y jamón.",
+        "imagen": "../recursos/productos/mil1.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 14,
+        "categoria": "mila",
+        "nombre": "Sandwich de Milanesa Vegetariano",
+        "descripcion": "Sándwich de milanesa vegetariana con berenjena, tomate y queso.",
+        "imagen": "../recursos/productos/mil2.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 15,
+        "categoria": "lomo",
+        "nombre": "Lomo BBQ",
+        "descripcion": "Sándwich de lomo de res con salsa BBQ, cebolla y queso.",
+        "imagen": "../recursos/productos/lomo3.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 16,
+        "categoria": "milanesa",
+        "nombre": "Sanwich de Milanesa Caprese",
+        "descripcion": "Sándwich de milanesa de pollo con tomate, mozzarella y albahaca.",
+        "imagen": "../recursos/productos/mil3.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 17,
+        "categoria": "bebidas",
+        "nombre": "Coca-Cola",
+        "descripcion": "Bebida carbonatada de cola con sabor dulce y refrescante.",
+        "imagen": "../recursos/productos/beb1.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 18,
+        "categoria": "bebidas",
+        "nombre": "Pepsi",
+        "descripcion": "Bebida carbonatada de cola con sabor dulce y refrescante.",
+        "imagen": "../recursos/productos/beb2.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 19,
+        "categoria": "bebidas",
+        "nombre": "Sprite",
+        "descripcion": "Bebida carbonatada con sabor a limón y sin cafeína.",
+        "imagen": "../recursos/productos/beb3.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 20,
+        "categoria": "bebidas",
+        "nombre": "Cerveza Quilmes",
+        "descripcion": "Cerveza rubia argentina con sabor suave y refrescante.",
+        "imagen": "../recursos/productos/beb4.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 21,
+        "categoria": "bebidas",
+        "nombre": "Cerveza Corona",
+        "descripcion": "Cerveza mexicana con sabor ligero y refrescante.",
+        "imagen": "../recursos/productos/beb5.jpg",
+        "precio": 1000
+    },
+    {
+        "id": 22,
+        "categoria": "bebidas",
+        "nombre": "Agua Mineral",
+        "descripcion": "Agua mineral natural sin gas.",
+        "imagen": "../recursos/productos/beb6.jpg",
+        "precio": 1000
+    }
+]
