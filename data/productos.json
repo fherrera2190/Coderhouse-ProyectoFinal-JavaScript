@@ -5,7 +5,7 @@
         "nombre": "Hamburguesa Clásica",
         "descripcion": "Hamburguesa clásica con carne de res, lechuga, tomate y queso.",
         "imagen": "../recursos/productos/ham1.jpg",
-        "precio": 1000
+        "precio": 2300
     },
     {
         "id": 2,
@@ -13,7 +13,7 @@
         "nombre": "Hamburguesa Doble Carne",
         "descripcion": "Hamburguesa doble con carne de res, lechuga, tomate y queso.",
         "imagen": "../recursos/productos/ham2.jpg",
-        "precio": 1000
+        "precio": 2700
     },
     {
         "id": 3,
@@ -21,7 +21,7 @@
         "nombre": "Hamburguesa Falafel",
         "descripcion": "Hamburguesa vegetariana con falafel, lechuga, tomate, cebolla y hummus.",
         "imagen": "../recursos/productos/ham3.jpg",
-        "precio": 1000
+        "precio": 1800
     },
     {
         "id": 4,
@@ -29,7 +29,7 @@
         "nombre": "Hamburguesa BBQ bacon",
         "descripcion": "Hamburguesa con carne de res, tocino, queso cheddar y cebolla.",
         "imagen": "../recursos/productos/ham4.jpg",
-        "precio": 1000
+        "precio": 2500
     },
     {
         "id": 5,
@@ -37,7 +37,7 @@
         "nombre": "Hamburguesa Portobello",
         "descripcion": "Hamburguesa vegetariana con hongos Portobello y cebolla caramelizada.",
         "imagen": "../recursos/productos/ham5.jpg",
-        "precio": 1000
+        "precio": 3100
     },
     {
         "id": 6,
@@ -45,7 +45,7 @@
         "nombre": "Hamburguesa Queso Azul",
         "descripcion": "Hamburguesa con carne de res, queso azul y cebolla salteada.",
         "imagen": "../recursos/productos/ham6.jpg",
-        "precio": 1000
+        "precio": 1400
     },
     {
         "id": 7,
@@ -53,7 +53,7 @@
         "nombre": "Hamburguesa Hawaiiana",
         "descripcion": "Hamburguesa con carne de res, queso, piña y jamón.",
         "imagen": "../recursos/productos/ham7.jpg",
-        "precio": 1000
+        "precio": 2600
     },
     {
         "id": 8,
@@ -117,7 +117,7 @@
         "nombre": "Lomo BBQ",
         "descripcion": "Sándwich de lomo de res con salsa BBQ, cebolla y queso.",
         "imagen": "../recursos/productos/lomo3.jpg",
-        "precio": 1000
+        "precio": 3600
     },
     {
         "id": 16,
@@ -157,7 +157,7 @@
         "nombre": "Cerveza Quilmes",
         "descripcion": "Cerveza rubia argentina con sabor suave y refrescante.",
         "imagen": "../recursos/productos/beb4.jpg",
-        "precio": 1000
+        "precio": 1100
     },
     {
         "id": 21,
@@ -165,7 +165,7 @@
         "nombre": "Cerveza Corona",
         "descripcion": "Cerveza mexicana con sabor ligero y refrescante.",
         "imagen": "../recursos/productos/beb5.jpg",
-        "precio": 1000
+        "precio": 1800
     },
     {
         "id": 22,
@@ -173,6 +173,6 @@
         "nombre": "Agua Mineral",
         "descripcion": "Agua mineral natural sin gas.",
         "imagen": "../recursos/productos/beb6.jpg",
-        "precio": 1000
+        "precio": 500
     }
 ]
